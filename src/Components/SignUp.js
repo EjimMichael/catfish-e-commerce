@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 function SignUp() {
   const history = useHistory();
-  
+
   const [fullName, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +53,12 @@ function SignUp() {
       <br />
       <h1>Sign Up</h1>
       <hr />
+      {successMsg && (
+        <>
+          <div className="success-msg">{successMsg}</div>
+          <br></br>
+        </>
+      )}
       <form className="form-group" autoComplete="off" onSubmit={handleSignUp}>
         <label>Full Name</label>
         <input
@@ -93,6 +99,12 @@ function SignUp() {
           </button>
         </div>
       </form>
+      {errorMsg && (
+        <>
+          <br></br>
+          <div className="error-msg">{errorMsg}</div>
+        </>
+      )}
     </div>
   );
 }
