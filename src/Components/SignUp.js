@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { auth, fs } from '../FirebaseConfig/Firebase';
-import { useHistory } from "react-router-dom";
 
 function SignUp() {
   const history = useHistory();
@@ -38,7 +37,7 @@ function SignUp() {
             setTimeout(() => {
               setSuccessMsg("");
               history.push("/login");
-            }, 3000);
+            }, 2000);
           })
           .catch((error) => setErrorMsg(error.message));
       })

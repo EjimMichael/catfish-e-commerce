@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { auth } from "../FirebaseConfig/Firebase";
+
 
 function Login() {
+
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,6 +14,21 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        setSuccessMsg(
+          "Login Successfull. You will now automatically get redirected to Home page"
+        );
+        setEmail("");
+        setPassword("");
+        setErrorMsg("");
+        setTimeout(() => {
+          setSuccessMsg("");
+          history.push("/");
+        }, 2000);
+      })
+      .catch((error) => setErrorMsg(error.message));
   };
 
   return (
@@ -18,6 +37,14 @@ function Login() {
       <br />
       <h1>Login</h1>
       <hr />
+
+      {successMsg && (
+        <>
+          <div className="success-msg">{successMsg}</div>
+          <br></br>
+        </>
+      )}
+
       <form className="form-group" autoComplete="off" onSubmit={handleLogin}>
         <label>Email</label>
         <input
@@ -50,6 +77,13 @@ function Login() {
           </button>
         </div>
       </form>
+
+      {errorMsg && (
+        <>
+          <br></br>
+          <div className="error-msg">{errorMsg}</div>
+        </>
+      )}
     </div>
   );
 }
