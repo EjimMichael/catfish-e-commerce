@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { auth, fs } from '../FirebaseConfig/Firebase';
+import { useHistory } from "react-router-dom";
 
 function SignUp() {
+  const history = useHistory();
+  
   const [fullName, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +15,36 @@ function SignUp() {
 
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((credentials) => {
+        console.log(credentials);
+        fs.collection("users")
+          .doc(credentials.user.uid)
+          .set({
+            FullName: fullName,
+            Email: email,
+            Password: password,
+          })
+          .then(() => {
+            setSuccessMsg(
+              "Signup Successfull. You will now automatically get redirected to Login"
+            );
+            setFullname("");
+            setEmail("");
+            setPassword("");
+            setErrorMsg("");
+            setTimeout(() => {
+              setSuccessMsg("");
+              history.push("/login");
+            }, 3000);
+          })
+          .catch((error) => setErrorMsg(error.message));
+      })
+      .catch((error) => {
+        setErrorMsg(error.message);
+      });
   };
 
   return (
