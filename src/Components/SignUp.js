@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 function SignUp() {
   return (
     <div className='container'>
-      <br></br>
-      <br></br>
+      <br />
+      <br />
       <h1>Sign Up</h1>
+      <hr />
       <form className="form-group" autoComplete="off">
         <label>Full Name</label>
         <input type="text" className="form-control" required />
