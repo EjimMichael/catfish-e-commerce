@@ -4,7 +4,6 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const firebaseConfig = {
-  // apiKey: "AIzaSyAey3GSdSUwL-xOBmCzAn0vScYv2uw8ZzE",
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "catfish-e-commerce.firebaseapp.com",
   projectId: "catfish-e-commerce",
