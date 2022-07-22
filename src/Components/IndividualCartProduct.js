@@ -2,8 +2,34 @@ import React from 'react'
 import Icon from 'react-icons-kit';
 import { plus } from "react-icons-kit/feather/plus";
 import { minus } from "react-icons-kit/feather/minus";
+import { auth, fs } from '../FirebaseConfig/Firebase';
 
-function IndividualCartProduct({ cartProduct }) {
+function IndividualCartProduct({
+  cartProduct,
+  cartProductIncrease,
+  cartProductDecrease,
+}) {
+  const handleCartProductIncrease = () => {
+    cartProductIncrease(cartProduct);
+  };
+
+  const handleCartProductDecrease = () => {
+    cartProductDecrease(cartProduct);
+  };
+
+  const handleCartProductDelete = () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fs.collection("Cart " + user.uid)
+          .doc(cartProduct.ID)
+          .delete()
+          .then(() => {
+            console.log("successfully deleted");
+          });
+      }
+    });
+  };
+
   return (
     <div className="product">
       <div className="product-img">
