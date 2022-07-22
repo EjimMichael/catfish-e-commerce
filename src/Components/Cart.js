@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { auth, fs } from "../FirebaseConfig/Firebase";
+import CartProducts from "./CartProducts";
 import NavBar from "./NavBar";
 
 function Cart() {
@@ -50,6 +51,20 @@ function Cart() {
   return (
     <>
       <NavBar user={user} />
+      <br />
+
+      {cartProducts.length > 0 && (
+        <div className="container-fluid">
+          <h1 className="text-center">Cart</h1>
+          <div className="products-box">
+            <CartProducts />
+          </div>
+        </div>
+      )}
+
+      {cartProducts.length < 1 && (
+        <div className="container-fluid">No products to show</div>
+      )}
     </>
   );
 }
