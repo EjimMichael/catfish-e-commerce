@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { auth, fs } from "../FirebaseConfig/Firebase";
 import CartProducts from "./CartProducts";
 import NavBar from "./NavBar";
+import StripeCheckout from "react-stripe-checkout";
+
 
 function Cart() {
   function GetCurrentUser() {
@@ -97,8 +99,9 @@ function Cart() {
 
   return (
     <>
-      <NavBar user={user} />
+      <NavBar user={user} totalProducts={totalProducts} />
       <br />
+
       {cartProducts.length > 0 && (
         <div className="container-fluid">
           <h1 className="text-center">Cart</h1>
@@ -108,6 +111,35 @@ function Cart() {
               cartProductIncrease={cartProductIncrease}
               cartProductDecrease={cartProductDecrease}
             />
+          </div>
+
+          <div className="summary-box">
+            <h5>Cart Summary</h5>
+            <br />
+            <div>
+              Total No of Products: <span>{totalQty}</span>
+            </div>
+            <div>
+              Total Price to Pay: <span>$ {totalPrice}</span>
+            </div>
+            <br />
+            {/* <StripeCheckout
+              stripeKey="pk_test_51Hhu6bK4kL4WRmvGEUkTmdFw1lUtTAnadBSDb0eXGuA2JJGrntIBdm10llYu5RbPbLbaS1My74Rgdi0n5ePYIGB600p3V4GKmK"
+              token={handleToken}
+              billingAddress
+              shippingAddress
+              name="All Products"
+              amount={totalPrice * 100}
+            ></StripeCheckout> */}
+            {/* <h6 className="text-center" style={{ marginTop: 7 + "px" }}>
+              OR
+            </h6>
+            <button
+              className="btn btn-secondary btn-md"
+              onClick={() => triggerModal()}
+            >
+              Cash on Delivery
+            </button> */}
           </div>
         </div>
       )}
