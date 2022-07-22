@@ -67,6 +67,7 @@ function Home(props) {
 
   // state of totalProducts
   const [totalProducts, setTotalProducts] = useState(0);
+
   // getting cart products
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
