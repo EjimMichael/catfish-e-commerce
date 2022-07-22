@@ -99,7 +99,6 @@ function Cart() {
     <>
       <NavBar user={user} />
       <br />
-
       {cartProducts.length > 0 && (
         <div className="container-fluid">
           <h1 className="text-center">Cart</h1>
