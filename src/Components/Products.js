@@ -1,7 +1,7 @@
 import React from 'react'
 import IndividualProduct from './IndividualProduct';
 
-function Products({ products }) {
+function Products({ products, addToCart }) {
 
   return products.map((individualProduct) => (
     <IndividualProduct
