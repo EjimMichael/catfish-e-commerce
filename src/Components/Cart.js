@@ -107,6 +107,7 @@ function Cart() {
             <CartProducts
               cartProducts={cartProducts}
               cartProductIncrease={cartProductIncrease}
+              cartProductDecrease={cartProductDecrease}
             />
           </div>
         </div>
