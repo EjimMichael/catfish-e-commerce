@@ -50,6 +50,30 @@ function Cart() {
 
   // console.log(cartProducts);
 
+  // getting the qty from cartProducts in a seperate array
+  const qty = cartProducts.map((cartProduct) => {
+    return cartProduct.qty;
+  });
+
+  // reducing the qty in a single value
+  const reducerOfQty = (accumulator, currentValue) =>
+    accumulator + currentValue;
+
+  const totalQty = qty.reduce(reducerOfQty, 0);
+
+  // console.log(totalQty);
+
+  // getting the TotalProductPrice from cartProducts in a seperate array
+  const price = cartProducts.map((cartProduct) => {
+    return cartProduct.TotalProductPrice;
+  });
+
+  // reducing the price in a single value
+  const reducerOfPrice = (accumulator, currentValue) =>
+    accumulator + currentValue;
+
+  const totalPrice = price.reduce(reducerOfPrice, 0);
+
   // global variable
   let Product;
 
@@ -59,7 +83,7 @@ function Cart() {
     Product = cartProduct;
     Product.qty = Product.qty + 1;
     Product.TotalProductPrice = Product.qty * Product.price;
-    
+
     // updating in database
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -97,6 +121,21 @@ function Cart() {
     }
   };
 
+  // state of totalProducts
+  const [totalProducts, setTotalProducts] = useState(0);
+
+  // getting cart products
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fs.collection("Cart " + user.uid).onSnapshot((snapshot) => {
+          const qty = snapshot.docs.length;
+          setTotalProducts(qty);
+        });
+      }
+    });
+  }, []);
+
   return (
     <>
       <NavBar user={user} totalProducts={totalProducts} />
@@ -123,23 +162,23 @@ function Cart() {
               Total Price to Pay: <span>$ {totalPrice}</span>
             </div>
             <br />
-            {/* <StripeCheckout
+            <StripeCheckout
               stripeKey="pk_test_51Hhu6bK4kL4WRmvGEUkTmdFw1lUtTAnadBSDb0eXGuA2JJGrntIBdm10llYu5RbPbLbaS1My74Rgdi0n5ePYIGB600p3V4GKmK"
-              token={handleToken}
+              //token={handleToken}
               billingAddress
               shippingAddress
               name="All Products"
               amount={totalPrice * 100}
-            ></StripeCheckout> */}
-            {/* <h6 className="text-center" style={{ marginTop: 7 + "px" }}>
+            ></StripeCheckout>
+            <h6 className="text-center" style={{ marginTop: 7 + "px" }}>
               OR
             </h6>
             <button
               className="btn btn-secondary btn-md"
-              onClick={() => triggerModal()}
+              //onClick={() => triggerModal()}
             >
               Cash on Delivery
-            </button> */}
+            </button>
           </div>
         </div>
       )}
