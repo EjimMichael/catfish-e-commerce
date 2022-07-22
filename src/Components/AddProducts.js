@@ -31,7 +31,8 @@ const handleProductImg = (e) => {
 
 const handleAddProducts = (e) => {
   e.preventDefault();
-  
+
+  // Adding products to firebase
   const uploadTask = storage.ref(`product-images/${image.name}`).put(image);
   uploadTask.on(
     "state_changed",
