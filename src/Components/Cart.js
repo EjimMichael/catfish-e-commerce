@@ -57,7 +57,7 @@ function Cart() {
         <div className="container-fluid">
           <h1 className="text-center">Cart</h1>
           <div className="products-box">
-            <CartProducts />
+            <CartProducts cartProducts={cartProducts} />
           </div>
         </div>
       )}
