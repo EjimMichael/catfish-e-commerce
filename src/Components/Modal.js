@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth, fs } from "../Config/Config";
+import { auth, fs } from "../FirebaseConfig/Firebase";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +21,7 @@ function Modal({ TotalPrice, totalQty, hideModal }) {
   // cash on delivery
   const handleCashOnDelivery = async (e) => {
     e.preventDefault();
+
     // console.log(cell, residentialAddress, cartPrice, cartQty);
     const uid = auth.currentUser.uid;
     const userData = await fs.collection("users").doc(uid).get();
@@ -32,6 +33,7 @@ function Modal({ TotalPrice, totalQty, hideModal }) {
       CartPrice: cartPrice,
       CartQty: cartQty,
     });
+
     const cartData = await fs.collection("Cart " + uid).get();
     for (var snap of cartData.docs) {
       var data = snap.data();
@@ -42,11 +44,13 @@ function Modal({ TotalPrice, totalQty, hideModal }) {
         .doc(snap.id)
         .delete();
     }
+
     hideModal();
     history.push("/");
+    
     toast.success("Your order has been placed successfully", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
