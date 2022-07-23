@@ -3,7 +3,11 @@ import { auth, fs } from "../FirebaseConfig/Firebase";
 import CartProducts from "./CartProducts";
 import NavBar from "./NavBar";
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Cart() {
   function GetCurrentUser() {
@@ -136,6 +140,42 @@ function Cart() {
     });
   }, []);
 
+  // charging payment
+  const history = useHistory();
+  const handleToken = async (token) => {
+    //  console.log(token);
+    const cart = { name: "All Products", totalPrice };
+    const response = await axios.post("http://localhost:8080/checkout", {
+      token,
+      cart,
+    });
+    console.log(response);
+    let { status } = response.data;
+    console.log(status);
+    if (status === "success") {
+      history.push("/");
+      toast.success("Your order has been placed successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+
+      const uid = auth.currentUser.uid;
+      const carts = await fs.collection("Cart " + uid).get();
+      for (var snap of carts.docs) {
+        fs.collection("Cart " + uid)
+          .doc(snap.id)
+          .delete();
+      }
+    } else {
+      alert("Something went wrong in checkout");
+    }
+  };
+
   return (
     <>
       <NavBar user={user} totalProducts={totalProducts} />
@@ -163,8 +203,8 @@ function Cart() {
             </div>
             <br />
             <StripeCheckout
-              stripeKey="pk_test_51LOUceLKe9UpdMvOJTZYtfeTR9YTXUfvnvFISflFCehezSy6pSJoUOR2y5vhWPg5ieD6WbiydJro6oAAMl31Rv1100yPKIrP0h"
-              //token={handleToken}
+              stripeKey={process.env.REACT_APP_STRIPE_KEY}
+              token={handleToken}
               billingAddress
               shippingAddress
               name="All Products"
