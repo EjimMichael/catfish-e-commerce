@@ -163,7 +163,7 @@ function Cart() {
             </div>
             <br />
             <StripeCheckout
-              stripeKey="pk_test_51Hhu6bK4kL4WRmvGEUkTmdFw1lUtTAnadBSDb0eXGuA2JJGrntIBdm10llYu5RbPbLbaS1My74Rgdi0n5ePYIGB600p3V4GKmK"
+              stripeKey="pk_test_51LOUceLKe9UpdMvOJTZYtfeTR9YTXUfvnvFISflFCehezSy6pSJoUOR2y5vhWPg5ieD6WbiydJro6oAAMl31Rv1100yPKIrP0h"
               //token={handleToken}
               billingAddress
               shippingAddress
