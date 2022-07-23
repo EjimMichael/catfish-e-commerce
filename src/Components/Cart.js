@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+toast.configure();
+
 function Cart() {
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
@@ -141,6 +143,7 @@ function Cart() {
 
   // charging payment
   const history = useHistory();
+
   const handleToken = async (token) => {
     //  console.log(token);
     const cart = { name: "All Products", totalPrice };
@@ -148,19 +151,21 @@ function Cart() {
       token,
       cart,
     });
+
     console.log(response);
     let { status } = response.data;
     console.log(status);
+
     if (status === "success") {
       history.push("/");
       toast.success("Your order has been placed successfully", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined,
+        progress: undefined
       });
 
       const uid = auth.currentUser.uid;
@@ -202,7 +207,8 @@ function Cart() {
             </div>
             <br />
             <StripeCheckout
-              stripeKey={process.env.REACT_APP_STRIPE_KEY}
+              //stripeKey={process.env.REACT_APP_STRIPE_KEY}
+              stripeKey="pk_test_51LOUceLKe9UpdMvOJTZYtfeTR9YTXUfvnvFISflFCehezSy6pSJoUOR2y5vhWPg5ieD6WbiydJro6oAAMl31Rv1100yPKIrP0h"
               token={handleToken}
               billingAddress
               shippingAddress
