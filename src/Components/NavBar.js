@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import logo from "../Images/logo.png";
+import eFish from "../Images/eFish.PNG";
 import { Icon } from "react-icons-kit";
 import { shoppingCart } from "react-icons-kit/feather/shoppingCart";
 import { auth } from "../FirebaseConfig/Firebase";
@@ -18,7 +18,7 @@ function NavBar({ user, totalProducts }) {
     <div className="navbar">
       <div className="leftside">
         <div className="logo">
-          <img src={logo} alt="logo" />
+          <img src={eFish} alt="logo" />
         </div>
       </div>
       <div className="rightside">
