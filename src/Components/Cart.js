@@ -7,12 +7,24 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Modal } from "./Modal";
+
 
 toast.configure();
 
 function Cart() {
   // show modal state
   const [showModal, setShowModal] = useState(false);
+
+  // trigger modal
+  const triggerModal = () => {
+    setShowModal(true);
+  };
+
+  // hide modal
+  const hideModal = () => {
+    setShowModal(false);
+  };
 
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
@@ -223,7 +235,7 @@ function Cart() {
             </h6>
             <button
               className="btn btn-secondary btn-md"
-              //onClick={() => triggerModal()}
+              onClick={() => triggerModal()}
             >
               Cash on Delivery
             </button>
@@ -233,6 +245,14 @@ function Cart() {
 
       {cartProducts.length < 1 && (
         <div className="container-fluid">No products to show</div>
+      )}
+
+      {showModal === true && (
+        <Modal
+          TotalPrice={totalPrice}
+          totalQty={totalQty}
+          hideModal={hideModal}
+        />
       )}
     </>
   );
