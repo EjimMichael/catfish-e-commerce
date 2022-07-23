@@ -11,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function Cart() {
+  // show modal state
+  const [showModal, setShowModal] = useState(false);
+
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
 
@@ -165,7 +168,7 @@ function Cart() {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined
+        progress: undefined,
       });
 
       const uid = auth.currentUser.uid;
