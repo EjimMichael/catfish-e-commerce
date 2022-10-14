@@ -104,7 +104,10 @@ function Home(props) {
   return (
     <>
       <NavBar user={user} totalProducts={totalProducts} />
-      <br></br>
+      <br />
+      <div className='bg-img'>
+        <h3>No 1 web store for your Catfish purchase</h3>
+      </div>
       {products.length > 0 && (
         <div className="container-fluid">
           <h1 className="text-center">Products</h1>
